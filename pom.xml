@@ -1,0 +1,42 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>com.theotherian.example</groupId>
+  <artifactId>handlebars-client-and-server-side</artifactId>
+  <version>1.0-SNAPSHOT</version>
+  <packaging>jar</packaging>
+
+  <name>handlebars-client-and-server-side</name>
+
+  <scm>
+    <connection>scm:git:git@github.com:theotherian/handlebars-client-and-server-side.git</connection>
+    <url>scm:git:git@github.com:theotherian/handlebars-client-and-server-side.git</url>
+    <developerConnection>scm:git:git@github.com:theotherian/handlebars-client-and-server-side.git</developerConnection>
+  </scm>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+
+  <build>
+    <plugins>
+      <plugin>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+          <source>1.7</source>
+          <target>1.7</target>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+
+  <dependencies>
+    <dependency>
+      <groupId>com.github.jknack</groupId>
+      <artifactId>handlebars</artifactId>
+      <version>1.1.0</version>
+    </dependency>
+  </dependencies>
+
+</project>
