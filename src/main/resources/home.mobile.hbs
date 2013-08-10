@@ -1,0 +1,31 @@
+<html>
+  <head>
+    <title>Mobile Home Page</title>
+    <script src="handlebars.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+    <script type="text/javascript">
+      {{#precompile "messages"}}{{/precompile}}
+      
+      function loadMessage() {
+        
+      }
+    </script>
+  </head>
+  <body>
+    <h1>Greetings {{name}}!</h1>
+    <p>Welcome to the site!  Click <a id="message-link" href="#">here</a> to see the messages</p>
+    <script type="text/javascript">
+      $(document).ready(function bindAll() {
+        $('#message-link').bind('click', function showMessages() {
+          var messageTemplate = Handlebars.templates['messages'];
+          var messageInfo;
+          $.get('messages').done( function(data) {
+            var html = messageTemplate(data);
+            $('body').append(html); 
+          }); 
+        });
+      
+      });
+    </script>
+  </body>
+</html>
