@@ -3,10 +3,12 @@
     <title>Home Page</title>
   </head>
   <body>
-    <h1>Greetings {{name}}!</h1>
-    <p>Welcome to the site!  Here are the latest messages:</p>
-    {{#latestmessages messages}}
-      {{> messages this}}
-    {{/latestmessages}}
+    <h1>Welcome to the site!</h1>
+    <p>Here are the latest messages:</p>
+    {{#each names}}
+      {{#latestmessages this}}
+        {{> messages this}}
+      {{/latestmessages}}
+    {{/each}}
   </body>
 </html>

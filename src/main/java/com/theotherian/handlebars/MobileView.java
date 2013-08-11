@@ -14,7 +14,7 @@ public class MobileView {
   @GET
   public Response get() throws IOException {
     Template template = HandlebarsManager.get().compile("home.mobile");
-    return Response.ok(template.apply(new Args("Ian"))).build();
+    return Response.ok(template.apply(new Args("Ian", "Denny", "Chris"))).build();
   }
 
 }

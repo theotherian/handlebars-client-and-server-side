@@ -14,11 +14,11 @@ public final class HandlebarsManager {
 
   private HandlebarsManager() {
     Handlebars handlebars = new Handlebars();
-    handlebars.registerHelper("latestmessages", new Helper<Object>() {
+    handlebars.registerHelper("latestmessages", new Helper<String>() {
 
       @Override
-      public CharSequence apply(Object context, Options options) throws IOException {
-        return options.fn(new Args("Ian", "Good Morning", "Good Evening", "Good Night"));
+      public CharSequence apply(String context, Options options) throws IOException {
+        return options.fn(MessagesDatastore.getMessagesByName(context));
       }
     });
     this.handlebars = handlebars;

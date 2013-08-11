@@ -5,23 +5,39 @@
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
     <script type="text/javascript">
       {{#precompile "messages"}}{{/precompile}}
-      
-      function loadMessage() {
-        
-      }
     </script>
   </head>
   <body>
-    <h1>Greetings {{name}}!</h1>
-    <p>Welcome to the site!  Click <a id="message-link" href="#">here</a> to see the messages</p>
+    <h1>Welcome to the mobile site!</h1>
+    <h4>Click on a name to see messages</h4>
+    {{#each names}}
+      <div class="message-container-{{this}}">
+        <p><a class="message-link" id="{{this}}" href="#">{{this}}</a></p>
+      </div>
+    {{/each}}
     <script type="text/javascript">
       $(document).ready(function bindAll() {
-        $('#message-link').bind('click', function showMessages() {
+        $('.message-link').bind('click', event, function showMessages() {
+          var name = event.target.id;
+          var messageList = '#message-list-' + name;
+          if ($(messageList).length) {
+            if ($(messageList).is(':visible')) {
+              return;
+            }
+            else {
+              $('.message-list').hide();
+              $(messageList).show();
+              return;
+            }
+          }
+          else {
+            $('.message-list').hide();
+          }
           var messageTemplate = Handlebars.templates['messages'];
-          var messageInfo;
-          $.get('messages').done( function(data) {
+          $.get('messages/' + name).done( function(data) {
             var html = messageTemplate(data);
-            $('body').append(html); 
+            $('.message-container-' + name).append('<div id="message-list-' + name + '" class="message-list">');
+            $(messageList).append(html); 
           }); 
         });
       

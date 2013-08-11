@@ -17,7 +17,7 @@ public class DesktopView {
   @Produces(MediaType.TEXT_HTML)
   public Response get() throws IOException {
     Template template = HandlebarsManager.get().compile("home");
-    return Response.ok(template.apply(new Args("Ian", "Hello"))).build();
+    return Response.ok(template.apply(new Args("Ian", "Denny", "Chris"))).build();
   }
 
 }

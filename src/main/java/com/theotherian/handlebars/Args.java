@@ -6,18 +6,13 @@ import com.google.common.collect.Lists;
 
 public class Args {
   
-  public Args(String name, String... messages) {
-    this.name = name;
-    this.messages = Lists.newArrayList(messages);
+  public Args(String... names) {
+    this.names = Lists.newArrayList(names);
   }
+
+  private List<String> names;
   
-  private String name;
+  public List<String> getNames() { return names; }
+  public void setNames(List<String> names) { this.names = names; }
   
-  public String getName() { return name; }
-  public void setName(String name) { this.name = name; }
-  
-  private List<String> messages;
-  
-  public List<String> getMessages() { return messages; }
-  public void setMessages(List<String> messages) { this.messages = messages; }
 }

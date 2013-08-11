@@ -8,7 +8,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
 
 @Path("handlebars.js")
-public class HandlebarsResource {
+public class HandlebarsJsResource {
   
   @GET
   @Produces("text/javascript")
