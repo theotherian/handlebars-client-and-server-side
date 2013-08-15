@@ -9,8 +9,6 @@ import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import org.apache.http.HttpHost;
-import org.apache.http.conn.routing.HttpRoute;
 import org.apache.http.impl.conn.PoolingClientConnectionManager;
 import org.apache.log4j.Logger;
 import org.glassfish.jersey.client.ClientConfig;
@@ -36,7 +34,6 @@ public final class MessageClient {
     PoolingClientConnectionManager connectionManager = new PoolingClientConnectionManager();
     connectionManager.setMaxTotal(100);
     connectionManager.setDefaultMaxPerRoute(20);
-    connectionManager.setMaxPerRoute(new HttpRoute(new HttpHost("localhost")), 10);
     
 //    clientConfig.property(ApacheClientProperties.CONNECTION_MANAGER, connectionManager);
 //    ApacheConnector connector = new ApacheConnector(clientConfig);
