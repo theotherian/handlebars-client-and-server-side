@@ -24,13 +24,15 @@ public class ServerConnectorProvider implements Feature {
     return true;
   }
   
-  public static class ServerConnectorFactory {
+  public static final class ServerConnectorFactory {
     
     private static ApplicationHandler applicationHandler;
     
     private static void init(ApplicationHandler applicationHandler) {
       ServerConnectorFactory.applicationHandler = applicationHandler;
     }
+    
+    private ServerConnectorFactory() {}
     
     public static ServerSideConnector build() {
       return new ServerSideConnector(applicationHandler);

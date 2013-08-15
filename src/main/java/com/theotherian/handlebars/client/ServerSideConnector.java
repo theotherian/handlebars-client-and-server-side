@@ -39,14 +39,21 @@ public class ServerSideConnector implements Connector {
 
   @Override
   public ClientResponse apply(ClientRequest request) throws ProcessingException {
-    ContainerRequest containerRequest = buildFromClientRequest(request);
+    ContainerRequest containerRequest = buildContainerRequestFromClientRequest(request);
     Future<ContainerResponse> future = applicationHandler.apply(containerRequest);
     ContainerResponse containerResponse = null;
     try {
       containerResponse = future.get();
     } catch (InterruptedException | ExecutionException e) {
       logger.error(e);
+      throw new ProcessingException(e);
     }
+    Response response = buildResponseFromContainerResponse(containerResponse);
+    ClientResponse clientResponse = new ClientResponse(request, response);
+    return clientResponse;
+  }
+
+  private Response buildResponseFromContainerResponse(ContainerResponse containerResponse) {
     ResponseBuilder responseBuilder = Response.status(containerResponse.getStatusInfo())
         .entity(containerResponse.getEntity()).lastModified(containerResponse.getLastModified())
         .type(containerResponse.getMediaType());
@@ -62,11 +69,11 @@ public class ServerSideConnector implements Connector {
       }
     }
 
-    ClientResponse clientResponse = new ClientResponse(request, responseBuilder.build());
-    return clientResponse;
+    Response response = responseBuilder.build();
+    return response;
   }
 
-  private ContainerRequest buildFromClientRequest(ClientRequest request) {
+  private ContainerRequest buildContainerRequestFromClientRequest(ClientRequest request) {
     URI uri = request.getUri();
     String method = request.getMethod();
     ContainerRequest containerRequest = new ContainerRequest(URI.create("http://localhost:8080/myapp"), uri, method,
@@ -95,6 +102,7 @@ public class ServerSideConnector implements Connector {
         containerRequest.setEntityStream(IOUtils.toInputStream(writer.toString()));
       } catch (IOException e) {
         logger.error(e);
+        throw new RuntimeException(e);
       }
     }
 
