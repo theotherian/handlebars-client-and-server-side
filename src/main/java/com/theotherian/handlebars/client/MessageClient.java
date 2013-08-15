@@ -4,8 +4,10 @@ import java.util.List;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import org.apache.http.HttpHost;
 import org.apache.http.conn.routing.HttpRoute;
@@ -54,6 +56,14 @@ public final class MessageClient {
           .request(MediaType.APPLICATION_JSON).get(new GenericType<List<Message>>(){});
     } finally {
       LOGGER.info("Time elapsed (get): " + (System.currentTimeMillis() - start) + "ms");
+    }
+  }
+  
+  public static void put(String name, List<Message> messages) {
+    Response response = INSTANCE.client.target("http://localhost:8080/myapp").path("messages/" + name)
+      .request(MediaType.APPLICATION_JSON).put(Entity.entity(messages, MediaType.APPLICATION_JSON));
+    if (response.getStatus() != 200) {
+      throw new RuntimeException("Response was " + response.getStatus());
     }
   }
 }

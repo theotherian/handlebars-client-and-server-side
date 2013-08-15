@@ -11,8 +11,11 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.glassfish.jersey.server.ApplicationHandler;
+import org.joda.time.DateTime;
 
 import com.github.jknack.handlebars.Template;
+import com.google.common.collect.Lists;
+import com.theotherian.handlebars.client.MessageClient;
 
 @Path("desktop")
 public class DesktopView {
@@ -22,6 +25,7 @@ public class DesktopView {
   @GET
   @Produces(MediaType.TEXT_HTML)
   public Response get() throws IOException, InterruptedException, ExecutionException {
+    MessageClient.put("Ian", Lists.newArrayList(Message.at("Foo", DateTime.now())));
     Template template = HandlebarsManager.get().compile("home");
     return Response.ok(template.apply(new Args("Ian", "Denny", "Chris"))).build();
   }
