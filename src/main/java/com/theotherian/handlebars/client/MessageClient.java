@@ -11,12 +11,13 @@ import javax.ws.rs.core.Response;
 
 import org.apache.http.impl.conn.PoolingClientConnectionManager;
 import org.apache.log4j.Logger;
+import org.glassfish.jersey.apache.connector.ApacheClientProperties;
+import org.glassfish.jersey.apache.connector.ApacheConnector;
 import org.glassfish.jersey.client.ClientConfig;
 import org.glassfish.jersey.client.ClientProperties;
 import org.glassfish.jersey.jackson.JacksonFeature;
 
 import com.theotherian.handlebars.Message;
-import com.theotherian.handlebars.ServerConnectorProvider.ServerConnectorFactory;
 
 public final class MessageClient {
   
@@ -35,10 +36,10 @@ public final class MessageClient {
     connectionManager.setMaxTotal(100);
     connectionManager.setDefaultMaxPerRoute(20);
     
-//    clientConfig.property(ApacheClientProperties.CONNECTION_MANAGER, connectionManager);
-//    ApacheConnector connector = new ApacheConnector(clientConfig);
+    clientConfig.property(ApacheClientProperties.CONNECTION_MANAGER, connectionManager);
+    ApacheConnector connector = new ApacheConnector(clientConfig);
     
-    ServerSideConnector connector = ServerConnectorFactory.build();
+//    ServerSideConnector connector = ServerConnectorFactory.build();
     clientConfig.connector(connector);
     
     client = ClientBuilder.newClient(clientConfig);
