@@ -30,17 +30,17 @@ public final class MessageClient {
 
   private MessageClient() {
     ClientConfig clientConfig = new ClientConfig();
-//    clientConfig.property(ClientProperties.READ_TIMEOUT, 20000);
+    clientConfig.property(ClientProperties.READ_TIMEOUT, 2000);
     clientConfig.property(ClientProperties.CONNECT_TIMEOUT, 500);
     
     PoolingClientConnectionManager connectionManager = new PoolingClientConnectionManager();
     connectionManager.setMaxTotal(100);
     connectionManager.setDefaultMaxPerRoute(20);
     
-    clientConfig.property(ApacheClientProperties.CONNECTION_MANAGER, connectionManager);
-    ApacheConnector connector = new ApacheConnector(clientConfig);
+//    clientConfig.property(ApacheClientProperties.CONNECTION_MANAGER, connectionManager);
+//    ApacheConnector connector = new ApacheConnector(clientConfig);
     
-//    ServerSideConnector connector = ServerConnectorFactory.build();
+    ServerSideConnector connector = ServerConnectorFactory.build();
     clientConfig.connector(connector);
     
     client = ClientBuilder.newClient(clientConfig);
