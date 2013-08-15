@@ -18,6 +18,7 @@ import org.glassfish.jersey.client.ClientProperties;
 import org.glassfish.jersey.jackson.JacksonFeature;
 
 import com.theotherian.handlebars.Message;
+import com.theotherian.handlebars.ServerConnectorProvider.ServerConnectorFactory;
 
 public final class MessageClient {
   
