@@ -37,10 +37,11 @@ public final class MessageClient {
     connectionManager.setMaxTotal(100);
     connectionManager.setDefaultMaxPerRoute(20);
     
-//    clientConfig.property(ApacheClientProperties.CONNECTION_MANAGER, connectionManager);
+    clientConfig.property(ApacheClientProperties.CONNECTION_MANAGER, connectionManager);
 //    ApacheConnector connector = new ApacheConnector(clientConfig);
+    HystrixProxyConnector connector = new HystrixProxyConnector(ServerConnectorFactory.build(), "MessageClient");
     
-    ServerSideConnector connector = ServerConnectorFactory.build();
+//    ServerSideConnector connector = ServerConnectorFactory.build();
     clientConfig.connector(connector);
     
     client = ClientBuilder.newClient(clientConfig);
@@ -51,15 +52,29 @@ public final class MessageClient {
     long start = System.currentTimeMillis();
 
     try {
-      return INSTANCE.client.target("http://localhost:8080/myapp").path("messages/" + name)
-          .request(MediaType.APPLICATION_JSON).get(new GenericType<List<Message>>(){});
+      return INSTANCE.client.target("http://localhost:8080/myapp").path("latestmessages/" + name)
+          .request(MediaType.APPLICATION_JSON).property(HystrixProxyConnector.RESOURCE_COMMAND_NAME, "messages")
+            .get(new GenericType<List<Message>>(){});
     } finally {
       LOGGER.info("Time elapsed (get): " + (System.currentTimeMillis() - start) + "ms");
     }
   }
   
+  public static String getAsString(String name) {
+    long start = System.currentTimeMillis();
+
+    try {
+      return INSTANCE.client.target("http://localhost:8080/myapp").path("latestmessages/" + name)
+          .request(MediaType.APPLICATION_JSON).get(String.class);
+    } finally {
+      LOGGER.info("Time elapsed (get): " + (System.currentTimeMillis() - start) + "ms");
+    }
+  }
+  
+  
+  
   public static void put(String name, List<Message> messages) {
-    Response response = INSTANCE.client.target("http://localhost:8080/myapp").path("messages/" + name)
+    Response response = INSTANCE.client.target("http://localhost:8080/myapp").path("latestmessages/" + name)
       .request(MediaType.APPLICATION_JSON).put(Entity.entity(messages, MediaType.APPLICATION_JSON));
     if (response.getStatus() != 200) {
       throw new RuntimeException("Response was " + response.getStatus());

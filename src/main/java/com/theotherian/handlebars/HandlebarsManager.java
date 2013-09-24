@@ -1,6 +1,7 @@
 package com.theotherian.handlebars;
 
 import java.io.IOException;
+import java.util.List;
 
 import com.github.jknack.handlebars.Handlebars;
 import com.github.jknack.handlebars.Helper;
@@ -15,14 +16,14 @@ public final class HandlebarsManager {
   
   private HandlebarsManager() {
     Handlebars handlebars = new Handlebars();
-    handlebars.registerHelper("latestmessages", new Helper<String>() {
-
-      @Override
-      public CharSequence apply(String context, Options options) throws IOException {
-//        return options.fn(MessagesDatastore.getMessagesByName(context));
-        return options.fn(MessageClient.get(context));
-      }
-    });
+//    handlebars.registerHelper("latestmessages", new Helper<String>() {
+//
+//      @Override
+//      public CharSequence apply(String context, Options options) throws IOException {
+////        return options.fn(MessagesDatastore.getMessagesByName(context));
+//        return options.fn(MessageClient.get(context));
+//      }
+//    });
     this.handlebars = handlebars;
   }
   

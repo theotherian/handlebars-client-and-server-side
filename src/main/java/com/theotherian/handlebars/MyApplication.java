@@ -12,6 +12,7 @@ public class MyApplication extends ResourceConfig {
     packages("com.theotherian.handlebars");
     register(JacksonFeature.class);
     register(ServerConnectorProvider.class);
+    register(HandlebarsResourceFeature.class);
   }
 
 }

@@ -34,7 +34,7 @@
             $('.message-list').hide();
           }
           var messageTemplate = Handlebars.templates['messages'];
-          $.get('messages/' + name).done( function(data) {
+          $.get('latestmessages/' + name).done( function(data) {
             var html = messageTemplate(data);
             $('.message-container-' + name).append('<div id="message-list-' + name + '" class="message-list">');
             $(messageList).append(html); 
