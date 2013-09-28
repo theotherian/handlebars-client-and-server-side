@@ -13,7 +13,7 @@ import com.github.jknack.handlebars.Helper;
 import com.github.jknack.handlebars.Options;
 
 @Path("latestmessages")
-public class MessagesResource implements Helper<String> {
+public class MessageResource implements Helper<String> {
   
   @GET
   @Path("{name}")
@@ -23,7 +23,7 @@ public class MessagesResource implements Helper<String> {
   }
   
   private List<Message> getMessages(String name) {
-    return MessagesDatastore.getMessagesByName(name);
+    return MessageDatastore.getMessagesByName(name);
   }
 
   @Override

@@ -8,13 +8,13 @@ import org.joda.time.DateTime;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 
-public final class MessagesDatastore {
+public final class MessageDatastore {
   
   private Map<String, List<Message>> messagesByName = Maps.newHashMap();
   
-  private static final MessagesDatastore INSTANCE = new MessagesDatastore();
+  private static final MessageDatastore INSTANCE = new MessageDatastore();
   
-  private MessagesDatastore() {
+  private MessageDatastore() {
     DateTime now = DateTime.now();
     messagesByName.put("Ian", Lists.newArrayList(
         Message.at("Wish I didn't eat that...", now.minusMinutes(5)),
